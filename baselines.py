@@ -122,7 +122,7 @@ class BettingBaselines:
             actions.append(action)
         profits = self.simulate_bets(actions)
         return self.compute_metrics(profits)
-
+    
     # Model-Based Baseline: Dyna-Q (tabular Q + learned transitions)
     def dyna_q_baseline(self, episodes=200, alpha=0.1, gamma=0.95, epsilon=0.1, planning_steps=5):
         self.load_data('train')

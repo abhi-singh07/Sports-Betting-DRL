@@ -87,7 +87,6 @@ if __name__ == "__main__":
     importer = FootballDataImporter(save_dir='data/epl/')
     
     df = importer.download_season_data(season=2022, division='E0')
-    df = importer.preprocess_data(df)
 
     if df is not None:
         print("===Sample Data===")
