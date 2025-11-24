@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 from typing import Dict, Tuple, Any
 import torch
 
-pd.set_option('future.no_silent_downcasting', True)
+# This line is removed/commented out to fix the OptionError in older pandas versions
+# pd.set_option('future.no_silent_downcasting', True)
 
 
 class BettingEnv(gym.Env):
@@ -29,7 +30,8 @@ class BettingEnv(gym.Env):
         split='train',
         initial_bankroll=1000.0,
         stochastic=False,
-        continuous_actions=False
+        continuous_actions=False,
+        stake=1.0 # <-- ADDED: Default fixed stake for discrete action
     ):
         super().__init__()
 
@@ -39,6 +41,7 @@ class BettingEnv(gym.Env):
         self.bankroll = initial_bankroll
         self.stochastic = stochastic
         self.continuous_actions = continuous_actions
+        self.stake = stake # <-- ADDED: Store the stake
 
         # Load data
         self.df = pd.read_csv(f"{data_dir}{split}.csv")
@@ -123,7 +126,7 @@ class BettingEnv(gym.Env):
         else:
             skip_flag = (action == 0)
             pred_idx = action - 1 if not skip_flag else -1
-            stake_abs = 1.0 if not skip_flag else 0.0
+            stake_abs = self.stake if not skip_flag else 0.0 # <-- FIXED: Use self.stake
 
         if skip_flag:
             reward = 0.0
