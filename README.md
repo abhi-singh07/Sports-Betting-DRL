@@ -103,3 +103,7 @@ source drl/bin/activate
 
 # Install all required libraries: torch, SB3, pandas, gymnasium, etc.
 pip install 'stable-baselines3[extra]' torch gymnasium pandas numpy scikit-learn requests
+
+python3 football_data_preprocessor.py
+
+python3 train_pipeline.py
